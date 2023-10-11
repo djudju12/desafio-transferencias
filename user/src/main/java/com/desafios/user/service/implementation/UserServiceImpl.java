@@ -6,19 +6,23 @@ import com.desafios.user.model.UserDTO;
 import com.desafios.user.repository.UserRepository;
 import com.desafios.user.service.UserService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private UserRepository repository;
 
     @Override
     public UserDTO getUser(Long userId) {
+        log.info("getting user {}", userId);
         var user = repository.findById(userId)
                 .orElseThrow(() -> new UserNotFound("User " + userId + " not found"));
 
+        log.info("user {} found", userId);
         return mapToDTO(user);
     }
 

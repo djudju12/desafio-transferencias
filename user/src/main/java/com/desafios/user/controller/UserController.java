@@ -20,7 +20,6 @@ public class UserController {
 
     @GetMapping(value = "/{userId}", produces = "application/json")
     public ResponseEntity<UserDTO> getUser(@PathVariable Long userId) {
-        log.info("getUser: {}", userId);
         var user = service.getUser(userId);
         return ResponseEntity.ok(user);
     }
