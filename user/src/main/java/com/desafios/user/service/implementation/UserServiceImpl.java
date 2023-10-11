@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUser(Long userId) {
         var user = repository.findById(userId)
-                .orElseThrow(() -> new UserNotFound("TODO: Create a proper exeception... User not found"));
+                .orElseThrow(() -> new UserNotFound("User " + userId + " not found"));
 
         return mapToDTO(user);
     }

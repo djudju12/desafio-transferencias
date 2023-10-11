@@ -7,6 +7,7 @@ import com.desafios.user.model.UserDTO;
 import com.desafios.user.model.UserRole;
 import com.desafios.user.repository.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -33,7 +35,8 @@ class UserServiceImplTest {
     UserServiceImpl userService;
 
     @Test
-    void getUser_Success() throws JsonProcessingException {
+    @SneakyThrows
+    void getUser_Success() {
         // given
         UserDTO expectedUser = Utils.readUser("user_test.json");
         User user = new User()

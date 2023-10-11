@@ -99,5 +99,4 @@ components:
           error:
             type: string
           error_description:
-            type: integer
-            format: int64
+            type: string

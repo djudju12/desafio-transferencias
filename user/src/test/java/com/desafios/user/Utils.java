@@ -1,8 +1,6 @@
 package com.desafios.user;
 
-import com.desafios.user.model.User;
 import com.desafios.user.model.UserDTO;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -13,18 +11,18 @@ import java.nio.charset.StandardCharsets;
 
 public class Utils {
 
-    public static UserDTO readUser(String filePath) throws JsonProcessingException {
-        System.out.println(filePath);
-        InputStream stream = Utils.class.getClassLoader().getResourceAsStream(filePath);
-        if (stream == null) {
-            throw new RuntimeException("File not found");
-        }
-        String content = readStream(stream);
+    public static UserDTO readUser(String fileName) throws IOException {
+        String content = readResource(fileName);
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(content, UserDTO.class);
     }
 
-    private static String readStream(InputStream stream) {
+    public static String readResource(String resourceName) {
+        InputStream stream = Utils.class.getClassLoader().getResourceAsStream(resourceName);
+        if (stream == null) {
+            throw new RuntimeException("File not found");
+        }
+
         StringBuilder sb = new StringBuilder();
         try {
             Reader reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
