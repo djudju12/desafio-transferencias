@@ -27,19 +27,20 @@ class UserControllerTest {
     @MockBean
     UserService userService;
 
-    final private String userResource = "user_test.json";
+    final private String USER_RESOURCE_NAME = "user_test.json";
+    final private String USER_API_PATH = "/users/";
 
     @Test
     @SneakyThrows
     void getUser_Success() {
         // given
-        UserDTO expectedUser = Utils.readUser(userResource);
+        UserDTO expectedUser = Utils.readUser(USER_RESOURCE_NAME);
         given(userService.getUser(expectedUser.id())).willReturn(expectedUser);
 
         // when / then
-        mockMvc.perform(get("/user/" + expectedUser.id()))
+        mockMvc.perform(get(USER_API_PATH+expectedUser.id()))
                 .andExpect(status().isOk())
-                .andExpect(content().json(Utils.readResource(userResource)));
+                .andExpect(content().json(Utils.readResource(USER_RESOURCE_NAME)));
 
         then(userService).should().getUser(expectedUser.id());
     }
