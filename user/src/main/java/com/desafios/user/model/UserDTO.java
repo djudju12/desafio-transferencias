@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Pattern;
 
 public record UserDTO(
 
+        @JsonProperty("user_id")
         Long id,
 
         @NotBlank(message = "Nome não pode ser vazio")

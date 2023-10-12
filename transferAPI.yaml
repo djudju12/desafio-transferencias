@@ -8,7 +8,33 @@ servers:
 tags:
   - name: Transfer
   - name: User
+  - name: Account
 paths:
+  /account:
+    post:
+      tags:
+        - Account
+      summary: Cria uma nova conta
+      operationId: createAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '200':
+          description: Conta criada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '4XX':
+          description: Erro na requisição
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
   /transfer:
     post:
       tags:
@@ -28,11 +54,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/TransferResponse'
         '4XX':
-            description: Erro na requisição
-            content:
-              application/json:
-                schema:
-                    $ref: '#/components/schemas/Error'
+          description: Erro na requisição
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /user:
     post:
@@ -53,12 +79,12 @@ components:
     TransferRequest:
       type: object
       properties:
-        from_id:
+        from_acc_id:
           type: integer
-          format: int64
-        to_id:
+          format: long
+        to_acc_id:
           type: integer
-          format: int64
+          format: long
         value:
           type: number
           format: double
@@ -66,37 +92,50 @@ components:
     TransferResponse:
       type: object
       properties:
-        id:
+        transfer_id:
           type: integer
           format: int64
         from:
-          $ref: '#/components/schemas/User'
+          $ref: '#/components/schemas/Account'
         to:
-          $ref: '#/components/schemas/User'
+          $ref: '#/components/schemas/Account'
         value:
           type: number
           format: double
+
+    User:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          format: long
+        full_name:
+          type: string
+        email:
+          type: string
+        cpf:
+          type: string
         created_at:
           type: string
           format: date-time
+        updated_at:
+          type: string
+          format: date-time
 
-    User:
-        type: object
-        properties:
-          user_id:
-            type: integer
-            format: int64
-          full_name:
-            type: string
-          email:
-            type: string
-          cpf/cnpj:
-            type: string
+    Account:
+      type: object
+      properties:
+        acc_id:
+          type: integer
+          format: long
+        user_id:
+          type: integer
+          format: long
 
     Error:
-        type: object
-        properties:
-          error:
-            type: string
-          error_description:
-            type: string
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string

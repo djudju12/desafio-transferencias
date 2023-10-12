@@ -7,8 +7,8 @@ services:
       - ./docker/tempo/tempo.yml:/etc/tempo.yaml:ro
       - ./docker/tempo/tempo-data:/tmp/tempo
     ports:
-      - "3110:3100"
-      - "9411:9411"
+      - "3110:3100" # tempo
+      - "9411:9411" # zipkin
 
   loki:
     image: grafana/loki:latest

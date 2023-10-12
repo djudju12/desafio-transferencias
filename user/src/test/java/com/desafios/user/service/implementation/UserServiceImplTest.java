@@ -1,12 +1,11 @@
 package com.desafios.user.service.implementation;
 
 import com.desafios.user.Utils;
-import com.desafios.user.exception.types.UserNotFound;
+import com.desafios.user.exception.types.UserNotFoundException;
 import com.desafios.user.model.User;
 import com.desafios.user.model.UserDTO;
 import com.desafios.user.model.UserRole;
 import com.desafios.user.repository.UserRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.io.IOException;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -63,7 +61,7 @@ class UserServiceImplTest {
         given(userRepositorys.findById(any(Long.class))).willReturn(Optional.empty());
 
         // when / then
-        assertThatExceptionOfType(UserNotFound.class).isThrownBy(
+        assertThatExceptionOfType(UserNotFoundException.class).isThrownBy(
                 () -> userService.getUser(0L));
 
         then(userRepositorys).should().findById(any(Long.class));

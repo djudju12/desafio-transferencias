@@ -1,6 +1,6 @@
 package com.desafios.user.service.implementation;
 
-import com.desafios.user.exception.types.UserNotFound;
+import com.desafios.user.exception.types.UserNotFoundException;
 import com.desafios.user.model.User;
 import com.desafios.user.model.UserDTO;
 import com.desafios.user.repository.UserRepository;
@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO getUser(Long userId) {
         log.info("getting user {}", userId);
         var user = repository.findById(userId)
-                .orElseThrow(() -> new UserNotFound("User " + userId + " not found"));
+                .orElseThrow(() -> new UserNotFoundException("User " + userId + " not found"));
 
         log.info("user {} found", userId);
         return mapToDTO(user);
