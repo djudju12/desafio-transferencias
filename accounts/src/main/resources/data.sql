@@ -1,0 +1,10 @@
+INSERT INTO tb_accounts(user_id, balance) VALUES (1, 1000.00);
+INSERT INTO tb_accounts(user_id, balance) VALUES (2, 1000.00);
+INSERT INTO tb_accounts(user_id, balance) VALUES (3, 1000.00);
+INSERT INTO tb_accounts(user_id, balance) VALUES (4, 1000.00);
+INSERT INTO tb_accounts(user_id, balance) VALUES (5, 1000.00);
+INSERT INTO tb_accounts(user_id, balance) VALUES (6, 1000.00);
+INSERT INTO tb_accounts(user_id, balance) VALUES (7, 1000.00);
+INSERT INTO tb_accounts(user_id, balance) VALUES (8, 1000.00);
+INSERT INTO tb_accounts(user_id, balance) VALUES (9, 1000.00);
+INSERT INTO tb_accounts(user_id, balance) VALUES (10, 1000.00);

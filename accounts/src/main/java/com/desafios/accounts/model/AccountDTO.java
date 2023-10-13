@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 
 public record AccountDTO(
-        @JsonProperty("account_id")
+        @JsonProperty("acc_id")
         Long id,
 
         @JsonProperty("user_id")

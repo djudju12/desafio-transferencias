@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class AccountController {
 
-//    private AccountService accService;
+    private AccountService accService;
 
     @GetMapping(value = "/{accountId}", produces = "application/json")
-    public ResponseEntity<AccountDTO> getAccount(@PathVariable String accountId) {
-  //      return ResponseEntity.ok(accService.getAccount(accountId));
+    public ResponseEntity<AccountDTO> getAccount(@PathVariable Long accountId) {
+        return ResponseEntity.ok(accService.getAccount(accountId));
     }
 }

@@ -1,21 +1,19 @@
-package com.desafios.user.exception;
+package com.desafios.accounts.exception;
 
-import com.desafios.user.exception.types.UserNotFoundException;
+import com.desafios.accounts.exception.types.AccountNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
 @Slf4j
 public class ErrorBastion {
-    @ExceptionHandler(UserNotFoundException.class)
+    @ExceptionHandler(AccountNotFoundException.class)
     protected ResponseEntity<ErrorResponse> handleUserNotFound(Exception exception) {
         ErrorResponse errorResponse = new ErrorResponse("User Not Found", exception.getMessage());
-        log.info("User not found. Exception: {}", exception.getMessage());
+        log.info("Account not found. Exception: {}", exception.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
-
 }
