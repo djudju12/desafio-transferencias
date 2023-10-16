@@ -1,5 +1,7 @@
 package com.desafios.accounts.service.implementation;
 
+import com.desafios.accounts.exception.types.InsufficientFundException;
+import com.desafios.accounts.exception.types.UserNotFoundException;
 import com.desafios.accounts.model.AccountDTO;
 import com.desafios.accounts.model.Transfer;
 import com.desafios.accounts.model.TransferDTO;
@@ -10,6 +12,7 @@ import com.desafios.accounts.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -21,17 +24,18 @@ public class TransferServiceImpl implements TransferService {
     private TransferRepository transferRepository;
 
     @Override
+    @Transactional
     public TransferDTO createTransfer(TransferDTO transferDTO) {
         log.info("Creating transfer: {}", transferDTO);
         Transfer transfer;
 
         var fromAcc = accService.getAccount(transferDTO.fromAccountId());
         if (!userService.userExists(fromAcc.userId())) {
-            throw new RuntimeException("User not found");
+            throw new UserNotFoundException("User not found");
         }
 
         if (fromAcc.balance() < transferDTO.amount()) {
-            throw new RuntimeException("Insufficient funds");
+            throw new InsufficientFundException("Current balance is less than the amount to be transferred");
         }
 
         AccountDTO newFrom = new AccountDTO(
@@ -41,7 +45,7 @@ public class TransferServiceImpl implements TransferService {
 
         var toAcc = accService.getAccount(transferDTO.toAccountId());
         if (!userService.userExists(toAcc.userId())) {
-            throw new RuntimeException("User not found");
+            throw new UserNotFoundException("User not found");
         }
 
         AccountDTO newTo = new AccountDTO(
