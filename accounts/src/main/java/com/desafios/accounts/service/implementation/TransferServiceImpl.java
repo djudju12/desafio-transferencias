@@ -27,11 +27,10 @@ public class TransferServiceImpl implements TransferService {
     @Transactional
     public TransferDTO createTransfer(TransferDTO transferDTO) {
         log.info("Creating transfer: {}", transferDTO);
-        Transfer transfer;
 
         var fromAcc = accService.getAccount(transferDTO.fromAccountId());
         if (!userService.userExists(fromAcc.userId())) {
-            throw new UserNotFoundException("User not found");
+            throw new UserNotFoundException("User " + fromAcc.userId() + " not found");
         }
 
         if (fromAcc.balance() < transferDTO.amount()) {
@@ -45,7 +44,7 @@ public class TransferServiceImpl implements TransferService {
 
         var toAcc = accService.getAccount(transferDTO.toAccountId());
         if (!userService.userExists(toAcc.userId())) {
-            throw new UserNotFoundException("User not found");
+            throw new UserNotFoundException("User " + toAcc.userId() + " not found");
         }
 
         AccountDTO newTo = new AccountDTO(
@@ -53,14 +52,13 @@ public class TransferServiceImpl implements TransferService {
                 toAcc.userId(),
                 toAcc.balance() + transferDTO.amount());
 
-        transfer = new Transfer()
+        Transfer transfer = new Transfer()
                 .setFromAccId(transferDTO.fromAccountId())
                 .setToAccId(transferDTO.toAccountId())
                 .setAmount(transferDTO.amount());
 
         accService.saveAccounts(newFrom, newTo);
         transferRepository.save(transfer);
-
         log.info("transfer created: {}", transferDTO);
 
         return mapToDTO(transfer);

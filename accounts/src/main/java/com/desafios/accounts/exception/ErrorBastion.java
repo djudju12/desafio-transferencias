@@ -22,6 +22,7 @@ public class ErrorBastion {
     @ExceptionHandler(InsufficientFundException.class)
     protected ResponseEntity<ErrorResponse> handleBadRequest(Exception exc) {
         ErrorResponse error = new ErrorResponse("Insufficient funds", exc.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        // response entity with the proper http status for insufficient funds in the account
+        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
     }
 }
