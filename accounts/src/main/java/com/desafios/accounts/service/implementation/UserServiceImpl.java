@@ -1,6 +1,5 @@
 package com.desafios.accounts.service.implementation;
 
-import com.desafios.accounts.exception.ErrorResponse;
 import com.desafios.accounts.exception.types.UserNotFoundException;
 import com.desafios.accounts.feign.UserProxy;
 import com.desafios.accounts.model.UserDTO;
@@ -29,5 +28,11 @@ public class UserServiceImpl implements UserService {
         }
 
         return user;
+    }
+
+    @Override
+    public Boolean userExists(Long userId) {
+        UserDTO user = getUser(userId);
+        return user != null;
     }
 }
